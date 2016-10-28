@@ -32,9 +32,6 @@ RUN set -ex \
 
 COPY config ./config
 
-#lexical analysis setting 
-
-
 EXPOSE 9200 9300
 CMD ["elasticsearch"]
 
