@@ -78,7 +78,7 @@ RUN make
 ## move generated lib file to lib folder
 RUN cp libMeCab.so /usr/local/lib
 
-#plugin install
+#plugin install -- wait for eungeon plugin update that support 2.4.1 version
 RUN /usr/share/elasticsearch/bin/plugin install org.bitbucket.eunjeon/elasticsearch-analysis-seunjeon/2.4.0.1
 
 EXPOSE 9200 9300
