@@ -33,9 +33,53 @@ RUN set -ex \
 COPY config ./config
 
 #lexical analysis setting 
+##intall mecab-ko
 
+##dependency setting
+RUN apt-get install -y automake perl build-essential
+
+##download source
+WORKDIR /opt
+RUN wget https://bitbucket.org/eunjeon/mecab-ko/downloads/mecab-0.996-ko-0.9.2.tar.gz
+RUN tar xvf mecab-0.996-ko-0.9.2.tar.gz
+
+## build & install
+WORKDIR /opt/mecab-0.996-ko-0.9.2
+RUN ./configure
+RUN make
+RUN make check
+RUN make install
+RUN ldconfig 
+
+#install mecab-ko-dic
+##Download source
+WORKDIR /opt
+RUN wget https://bitbucket.org/eunjeon/mecab-ko-dic/downloads/mecab-ko-dic-2.0.0-20150517.tar.gz
+RUN tar xvf mecab-ko-dic-2.0.0-20150517.tar.gz
+
+##build & install
+WORKDIR /opt/mecab-ko-dic-2.0.0-20150517
+RUN ./autogen.sh
+RUN ./configure
+RUN make
+RUN make install
+
+#mecab-java install
+ENV JAVA_TOOL_OPTIONS -Dfile.encoding=UTF8
+WORKDIR /opt
+RUN wget https://bitbucket.org/eunjeon/mecab-java/downloads/mecab-java-0.996.tar.gz
+RUN tar xvf mecab-java-0.996.tar.gz
+
+##build & install
+WORKDIR /opt/mecab-java-0.996
+COPY mecab-java-makefile/Makefile Makefile
+RUN make
+
+## move generated lib file to lib folder
+RUN cp libMeCab.so /usr/local/lib
+
+#plugin install
+RUN /usr/share/elasticsearch/bin/plugin install org.bitbucket.eunjeon/elasticsearch-analysis-seunjeon/2.4.0.1
 
 EXPOSE 9200 9300
 CMD ["elasticsearch"]
-
-
