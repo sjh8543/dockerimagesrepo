@@ -9,10 +9,11 @@ RUN apt-get -y install vim curl wget apt-transport-https
 RUN apt-get -y install openjdk-8-jdk
 
 #install elasticsearch
+ENV ELASTICSEARCH_VERSION 2.4.0
 RUN wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | apt-key add -
 RUN echo "deb https://packages.elastic.co/elasticsearch/2.x/debian stable main" > /etc/apt/sources.list.d/elasticsearch.list
 RUN apt-get update && apt-get -y install apt-transport-https 
-RUN apt-get -y install elasticsearch
+RUN apt-get -y install elasticsearch=$ELASTICSEARCH_VERSION
 
 ENV PATH /usr/share/elasticsearch/bin:$PATH
 
