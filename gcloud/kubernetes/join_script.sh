@@ -1,1 +1,1 @@
-kubeadm join --token=34f86e.1657f87a44470fb8 172.31.15.223
+kubeadm join --token=7aa123.5f078082b0d25f24 172.31.50.41
