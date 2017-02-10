@@ -16,6 +16,8 @@ WORKDIR /home/runtime/lib
 ENV PATH "/usr/local/cuda-8.0/bin:$PATH"
 ENV LD_LIBRARY_PATH "/usr/local/cuda-8.0/lib:$LD_LIBRARY_PATH"
 
+ARG DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && apt-get install -yq keyboard-configuration \
  && rm -rf /var/lib/apt/lists/*
 
